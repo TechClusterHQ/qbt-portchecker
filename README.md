@@ -23,6 +23,7 @@ volumes:
 ```
 > [!NOTE]  
 > Refer to the [gluetun documentation](https://github.com/qdm12/gluetun-wiki/blob/main/setup/advanced/control-server.md) for more information regarding the auth system
+
 Generate an api key using `docker run --rm -v ./gluetun:/gluetun qmcgaw/gluetun genkey`, which should also create the gluetun folder.
 
 Navigate to the gluetun folder and create the "auth" subdirectory. If there are issues with folder permissions, run the mkdir command as root.
