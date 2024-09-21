@@ -1,7 +1,5 @@
 #!/usr/bin/with-contenv bash
 
-# Logfunktion
-
 log() {
     local message="$1"
     local timestamp=$(date +"%Y.%m.%dT%H:%M:%S")
