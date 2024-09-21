@@ -16,6 +16,8 @@ KILL_ON_NOT_CONNECTABLE=${PORTCHECKER_KILL_ON_NOT_CONNECTABLE:-true} # qbittorre
 
 VAR_UP=true
 
+log "skript startet"
+
 while :; do
 
     HTTP_STATUS=$(wget -T 5 -t 1 --server-response --spider "http://localhost:${WEBUI_PORT}" 2>&1 | awk '/HTTP\// {print $2}')
