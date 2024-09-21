@@ -1,6 +1,6 @@
 # qbt-portchecker
 
-small docker mod for the [linuxserver.io qbittorrent container](https://docs.linuxserver.io/images/docker-qbittorrent) that automatically updates the torrenting port to the forwarded vpn port (via [gluetun](https://github.com/qdm12/gluetun)).
+small docker mod for the [linuxserver.io qbittorrent container](https://docs.linuxserver.io/images/docker-qbittorrent) that automatically updates the torrenting port to the forwarded vpn port (via [gluetun](https://github.com/qdm12/gluetun)) and checks if you are connectable.
 
 adapted from a script made by [schumi4](https://github.com/schumi4)
 
