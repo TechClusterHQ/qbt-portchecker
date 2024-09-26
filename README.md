@@ -4,6 +4,8 @@ small docker mod for the [linuxserver.io qbittorrent container](https://docs.lin
 
 adapted from a script made by [schumi4](https://github.com/schumi4)
 
+Important: If you were using an older version of this script (that uses custom services and is not a docker mod), remove it first: Delete the custom-services volume and the corresponding folder on your drive. After you've upgraded, the script will update itself and no manual intervention is needed.
+
 ## Installation
 
 First up, enable the option "Bypass authentication for clients on localhost" in the qBittorrent settings under the "Web UI" tab
