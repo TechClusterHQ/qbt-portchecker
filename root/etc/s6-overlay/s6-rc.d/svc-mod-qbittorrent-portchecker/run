@@ -6,6 +6,7 @@ log() {
     echo "${timestamp} (qbt-portchecker) ${message}"
 }
 
+FIREWALL_VPN_INPUT_PORTS=${FIREWALL_VPN_INPUT_PORTS}
 GLUETUN_API_KEY=${PORTCHECKER_GLUETUN_API_KEY}
 SLEEP_COMPLETE=${PORTCHECKER_SLEEP:-120}
 KILL_ON_NOT_CONNECTABLE=${PORTCHECKER_KILL_ON_NOT_CONNECTABLE:-true}
@@ -31,24 +32,29 @@ while :; do
 
     SLEEP=$SLEEP_COMPLETE
 
-    PORT=$(wget -T 5 -t 1 -qO- "http://localhost:${WEBUI_PORT}/api/v2/app/preferences" | jq ".listen_port")
-    NEW_PORT=$(wget --header="X-API-Key: ${GLUETUN_API_KEY}" -T 5 -t 1 -qO- "http://localhost:8000/v1/openvpn/portforwarded" | jq ".port")
-
-    if [[ "" == "$NEW_PORT" ]]; then
-        log "no port in file or file not found"
-    elif [[ "" == "$PORT" ]]; then
-        log "api did not respond"
-    elif [[ "$PORT" == "$NEW_PORT" ]]; then
-        [[ true == "$VAR_UP" ]] && log "port did not change (port: $PORT)"
+    if [ -n "$FIREWALL_VPN_INPUT_PORTS" ]; then
+        NEW_PORT="$FIREWALL_VPN_INPUT_PORTS"
     else
-        log "detected port changed: old: $PORT, new: $NEW_PORT"
-        curl --silent --request POST --url "http://localhost:${WEBUI_PORT}/api/v2/app/setPreferences" --data "json={\"listen_port\": $NEW_PORT}"
-
-        if [[ $? -eq 0 ]]; then
-            log "port updated to $NEW_PORT successfully"
-            PORT=$NEW_PORT
+        NEW_PORT=$(wget --header="X-API-Key: ${GLUETUN_API_KEY}" -T 5 -t 1 -qO- "http://localhost:8000/v1/openvpn/portforwarded" | jq ".port")
+    
+        PORT=$(wget -T 5 -t 1 -qO- "http://localhost:${WEBUI_PORT}/api/v2/app/preferences" | jq ".listen_port")
+    
+        if [[ "" == "$NEW_PORT" ]]; then
+            log "no port in file or file not found"
+        elif [[ "" == "$PORT" ]]; then
+            log "api did not respond"
+        elif [[ "$PORT" == "$NEW_PORT" ]]; then
+            [[ true == "$VAR_UP" ]] && log "port did not change (port: $PORT)"
         else
-            log "error updating port"
+            log "detected port changed: old: $PORT, new: $NEW_PORT"
+            curl --silent --request POST --url "http://localhost:${WEBUI_PORT}/api/v2/app/setPreferences" --data "json={\"listen_port\": $NEW_PORT}"
+    
+            if [[ $? -eq 0 ]]; then
+                log "port updated to $NEW_PORT successfully"
+                PORT=$NEW_PORT
+            else
+                log "error updating port"
+            fi
         fi
     fi
 
