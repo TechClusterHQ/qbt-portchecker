@@ -10,8 +10,6 @@ on:
     - cron: '17 15 * * *'
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
 
 env:
   # Use docker.io for Docker Hub if empty
