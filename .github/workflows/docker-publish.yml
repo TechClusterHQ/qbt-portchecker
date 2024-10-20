@@ -19,6 +19,7 @@ env:
   REGISTRY: ghcr.io
   # github.repository as <account>/<repo>
   IMAGE_NAME: ${{ github.repository }}
+  PR_NUMBER: ${{ github.event.number }}
 
 jobs:
   build:
@@ -76,7 +77,7 @@ jobs:
         with:
           context: .
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ github.event_name == 'pull_request' && 'potentially-unsafe-pr-${{ github.pull_request.number }}' || steps.meta.outputs.tags }}
+          tags: ${{ github.event_name == 'pull_request' && 'potentially-unsafe-pr-${{ PR_NUMBER }}' || steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
@@ -105,7 +106,7 @@ jobs:
         with:
           script: |
             const prNumber = context.payload.pull_request.number;
-            const tag = 'potentially-unsafe-pr-${{ github.pull_request.number }}';
+            const tag = 'potentially-unsafe-pr-${{ PR_NUMBER }}';
             github.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
