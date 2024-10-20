@@ -10,6 +10,8 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+  pull_request_target:
+    types: [opened]
   workflow_dispatch:
 
 env:
@@ -94,17 +96,19 @@ jobs:
         # against the sigstore community Fulcio instance.
         run: echo "${TAGS}" | xargs -I {} cosign sign --yes {}@${DIGEST}
 
-      # Comment on the PR with the Docker image tag
+  comment:
+    if: github.event_name == 'pull_request_target'
+    runs-on: ubuntu-latest
+    steps:
       - name: Comment on PR
-        if: github.event_name == 'pull_request'
         uses: actions/github-script@v7
         with:
           script: |
             const prNumber = context.payload.pull_request.number;
-            const tag = 'pr-${{ github.event.number }}';
+            const tag = 'potentially-unsafe-pr-${{ github.event.number }}';
             github.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: prNumber,
-              body: `Docker image: \`ghcr.io/techclusterhq/qbt-portchecker:${tag}\``
+              body: `Docker image: ${tag}`
             });
