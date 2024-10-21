@@ -4,9 +4,12 @@ small docker mod for the [linuxserver.io qbittorrent container](https://docs.lin
 
 adapted from a script made by [schumi4](https://github.com/schumi4)
 
+Pick the [dynamic port installation](#installation-dynamic-port) for VPN providers who decide the port that you will be forwarding for you (for example ProtonVPN and PIA), the script will then automatically update the port qBittorrent uses for torrent traffic.\
+If your VPN provider lets you select a port to be forwarded that stays the same (like AirVPN), follow the instructions for the [static port installation](#installation-static-port).
+
 Important: If you were using an older version of this script (that uses custom services and is not a docker mod), remove it first: Delete the custom-services volume and the corresponding folder on your drive. After you've upgraded, the script will update itself and no manual intervention is needed.
 
-## Installation
+## Installation (dynamic port)
 
 First up, enable the option "Bypass authentication for clients on localhost" in the qBittorrent settings under the "Web UI" tab
 
@@ -39,5 +42,19 @@ auth = "apikey"
 apikey = "API KEY HERE"
 ```
 Now, set the qBittorrent environment variable `PORTCHECKER_GLUETUN_API_KEY` to the api key.
+
+Start the stack again and check if the program updates the port accordingly. Feel free to open a [GitHub issue](https://github.com/TechClusterHQ/qbt-portchecker/issues) or DM me on Discord (username `app.py`).
+
+## Installation (static port)
+
+First up, enable the option "Bypass authentication for clients on localhost" in the qBittorrent settings under the "Web UI" tab
+
+Add the following environment variables to your qBittorrent container:
+```yaml
+- DOCKER_MODS=ghcr.io/techclusterhq/qbt-portchecker:main
+- FIREWALL_VPN_INPUT_PORTS= # set this to your forwarded vpn port
+- PORTCHECKER_SLEEP=180 # optional, default 180: how long the script should wait between each check
+- PORTCHECKER_KILL_ON_NOT_CONNECTABLE=true # optional, default true: whether or not to restart qBittorrent if the port stops being connectable
+```
 
 Start the stack again and check if the program updates the port accordingly. Feel free to open a [GitHub issue](https://github.com/TechClusterHQ/qbt-portchecker/issues) or DM me on Discord (username `app.py`).
