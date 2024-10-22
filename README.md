@@ -15,11 +15,14 @@ First, enable the option "Bypass authentication for clients on localhost" in the
 
 Add the following environment variables to your qBittorrent container:
 ```yaml
+- WEBUI_PORT=8080 # if it doesn't exist already and you changed the port from the default 8080
 - DOCKER_MODS=ghcr.io/techclusterhq/qbt-portchecker:main
 - PORTCHECKER_GLUETUN_API_KEY=API KEY HERE # instructions below
 - PORTCHECKER_SLEEP=180 # optional, default 180: how long the script should wait between each check
 - PORTCHECKER_KILL_ON_NOT_CONNECTABLE=true # optional, default true: whether or not to restart qBittorrent if the port stops being connectable
 ```
+
+If it exists, remove the `TORRENTING_PORT` variable completely.
 
 Then, volume the gluetun folder from the gluetun container to your host if you haven't already:
 ```yaml
@@ -51,10 +54,13 @@ First, enable the option "Bypass authentication for clients on localhost" in the
 
 Add the following environment variables to your qBittorrent container:
 ```yaml
+- WEBUI_PORT=8080 # if it doesn't exist already and you changed the port from the default 8080
 - DOCKER_MODS=ghcr.io/techclusterhq/qbt-portchecker:main
 - FIREWALL_VPN_INPUT_PORTS= # set this to your forwarded vpn port
 - PORTCHECKER_SLEEP=180 # optional, default 180: how long the script should wait between each check
 - PORTCHECKER_KILL_ON_NOT_CONNECTABLE=true # optional, default true: whether or not to restart qBittorrent if the port stops being connectable
 ```
+
+If it exists, remove the `TORRENTING_PORT` variable completely.
 
 Start the stack again and check if the program updates the port accordingly. Feel free to open a [GitHub issue](https://github.com/TechClusterHQ/qbt-portchecker/issues) or DM me on Discord (username `app.py`).
