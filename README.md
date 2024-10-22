@@ -1,8 +1,8 @@
 # qbt-portchecker
 
-small docker mod for the [linuxserver.io qbittorrent container](https://docs.linuxserver.io/images/docker-qbittorrent) that automatically updates the torrenting port to the forwarded vpn port (via [gluetun](https://github.com/qdm12/gluetun)) and checks if you are connectable.
+Docker mod for the [linuxserver.io qbittorrent container](https://docs.linuxserver.io/images/docker-qbittorrent) that automatically updates the torrenting port to the forwarded vpn port (via [gluetun](https://github.com/qdm12/gluetun)) and checks if you are connectable.
 
-adapted from a script made by [schumi4](https://github.com/schumi4)
+Adapted from a script made by [schumi4](https://github.com/schumi4)
 
 Pick the [dynamic port installation](#installation-dynamic-port) for VPN providers who decide the port that you will be forwarding for you (for example ProtonVPN and PIA), the script will then automatically update the port qBittorrent uses for torrent traffic.\
 If your VPN provider lets you select a port to be forwarded that stays the same (like AirVPN), follow the instructions for the [static port installation](#installation-static-port).
@@ -11,7 +11,7 @@ Important: If you were using an older version of this script (that uses custom s
 
 ## Installation (dynamic port)
 
-First up, enable the option "Bypass authentication for clients on localhost" in the qBittorrent settings under the "Web UI" tab
+First, enable the option "Bypass authentication for clients on localhost" in the qBittorrent settings under the "Web UI" tab
 
 Add the following environment variables to your qBittorrent container:
 ```yaml
@@ -47,7 +47,7 @@ Start the stack again and check if the program updates the port accordingly. Fee
 
 ## Installation (static port)
 
-First up, enable the option "Bypass authentication for clients on localhost" in the qBittorrent settings under the "Web UI" tab
+First, enable the option "Bypass authentication for clients on localhost" in the qBittorrent settings under the "Web UI" tab
 
 Add the following environment variables to your qBittorrent container:
 ```yaml
