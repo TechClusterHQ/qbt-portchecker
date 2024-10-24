@@ -35,6 +35,12 @@ while :; do
     else
         NEW_PORT=$(wget --header="X-API-Key: ${GLUETUN_API_KEY}" -T 5 -t 1 -qO- "http://localhost:8000/v1/openvpn/portforwarded" | jq ".port")
     
+        if [[ "$NEW_PORT" -eq 0 ]]; then
+            log "received port 0, ignoring and retrying after $SLEEP seconds"
+            sleep $SLEEP
+            continue
+        fi
+    
         PORT=$(wget -T 5 -t 1 -qO- "http://localhost:${WEBUI_PORT}/api/v2/app/preferences" | jq ".listen_port")
     
         if [[ "" == "$NEW_PORT" ]]; then
@@ -74,7 +80,7 @@ while :; do
     fi
 
 
-    [[ true == "$VAR_UP" ]] && log "sleeping for $SLEEP, retrying afterwards"
+    [[ true == "$VAR_UP" ]] && log "sleeping for $SLEEP seconds, retrying afterwards"
     sleep $SLEEP
 
 done
