@@ -12,3 +12,4 @@ if [[ $? -eq 0 ]]; then
     log "banlist cleared successfully"
 else
     log "error clearing banlist"
+fi
