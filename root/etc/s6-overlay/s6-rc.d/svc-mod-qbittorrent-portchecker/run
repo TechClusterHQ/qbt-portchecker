@@ -9,6 +9,7 @@ log() {
 GLUETUN_API_KEY=${PORTCHECKER_GLUETUN_API_KEY}
 SLEEP_COMPLETE=${PORTCHECKER_SLEEP:-120}
 KILL_ON_NOT_CONNECTABLE=${PORTCHECKER_KILL_ON_NOT_CONNECTABLE:-true}
+CLEAR_PERIODICALLY=${PORTCHECKER_CLEAR_PERIODICALLY}
 FIREWALL_VPN_INPUT_PORTS=${FIREWALL_VPN_INPUT_PORTS} # permanently set this port as the forwarded port
 
 VAR_UP=true
@@ -25,6 +26,12 @@ while :; do
     sleep 1
 
 done
+
+if [[ -n "$CLEAR_PERIODICALLY"]]; then
+    (crontab -l 2>/dev/null; echo "${CLEAR_PERIODICALLY} /clean-banlist.sh") | crontab -
+
+    log set up cronjob
+fi
 
 while :; do
 
