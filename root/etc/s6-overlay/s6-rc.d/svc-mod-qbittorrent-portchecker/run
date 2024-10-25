@@ -27,7 +27,7 @@ while :; do
 
 done
 
-if [[ -n "$CLEAR_PERIODICALLY"]]; then
+if [ -n "$CLEAR_PERIODICALLY"]; then
     (crontab -l 2>/dev/null; echo "${CLEAR_PERIODICALLY} /clean-banlist.sh") | crontab -
 
     log set up cronjob
