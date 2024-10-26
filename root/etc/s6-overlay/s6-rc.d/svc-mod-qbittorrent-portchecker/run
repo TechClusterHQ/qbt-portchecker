@@ -27,7 +27,7 @@ while :; do
 
 done
 
-if [ -n "$CLEAR_PERIODICALLY"]; then
+if [ -z "$CLEAR_PERIODICALLY"]; then
     (crontab -l 2>/dev/null; echo "${CLEAR_PERIODICALLY} /clean-banlist.sh") | crontab -
 
     log "set up cronjob"
@@ -39,6 +39,7 @@ while :; do
 
     if [ -n "$FIREWALL_VPN_INPUT_PORTS" ]; then
         NEW_PORT="$FIREWALL_VPN_INPUT_PORTS"
+        log "using static port"
     else
         NEW_PORT=$(wget --header="X-API-Key: ${GLUETUN_API_KEY}" -T 5 -t 1 -qO- "http://localhost:8000/v1/openvpn/portforwarded" | jq ".port")
     
