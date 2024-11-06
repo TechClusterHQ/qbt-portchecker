@@ -22,6 +22,12 @@ Add the following environment variables to your qBittorrent container:
 - PORTCHECKER_KILL_ON_NOT_CONNECTABLE=true # optional, default true: whether or not to restart qBittorrent if the port stops being connectable
 ```
 
+> [!NOTE]  
+> If you are already using another docker mod with your qBittorrent container you have to combine both into one DOCKER_MODS variable, seperated by a pipe:
+> ```yaml
+> - DOCKER_MODS=ghcr.io/techclusterhq/qbt-portchecker:main|ghcr.io/techclusterhq/qbt-slowban:main
+> ```
+
 If it exists, remove the `TORRENTING_PORT` variable completely.
 
 Then, volume the gluetun folder from the gluetun container to your host if you haven't already:
