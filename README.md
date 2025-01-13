@@ -11,6 +11,10 @@ Important: If you were using an older version of this script (that uses custom s
 
 ## Installation (dynamic port)
 
+> [!NOTE]
+> Gluetun port forwarding must already be set up for the portchecker to function correctly
+> See the [gluetun documentation](https://github.com/qdm12/gluetun-wiki/blob/main/setup/advanced/vpn-port-forwarding.md#native-integrations) for more details
+
 First, enable the option "Bypass authentication for clients on localhost" in the qBittorrent settings under the "Web UI" tab
 
 Add the following environment variables to your qBittorrent container:
@@ -56,6 +60,10 @@ Start the stack again and check if the program updates the port accordingly. Fee
 
 ## Installation (static port)
 
+> [!NOTE]
+> Gluetun port forwarding must already be set up for the portchecker to function correctly
+> See the [gluetun documentation](https://github.com/qdm12/gluetun-wiki/blob/main/setup/advanced/vpn-port-forwarding.md#allow-a-forwarded-port-through-the-firewall) for more details
+
 First, enable the option "Bypass authentication for clients on localhost" in the qBittorrent settings under the "Web UI" tab
 
 Add the following environment variables to your qBittorrent container:
@@ -70,3 +78,10 @@ Add the following environment variables to your qBittorrent container:
 If it exists, remove the `TORRENTING_PORT` variable completely.
 
 Start the stack again and check if the program updates the port accordingly. Feel free to open a [GitHub issue](https://github.com/TechClusterHQ/qbt-portchecker/issues) or DM me on Discord (username `app.py`).
+
+## Disabling gluetun control server log messages
+
+If you don't want gluetun to print a log message every time the portchecker accesses the currently open port, you can add the following environment variable to the gluetun service:
+```yaml
+HTTP_CONTROL_SERVER_LOG=off
+```
