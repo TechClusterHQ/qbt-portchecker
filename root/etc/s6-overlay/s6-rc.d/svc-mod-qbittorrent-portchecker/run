@@ -7,6 +7,7 @@ log() {
 }
 
 GLUETUN_API_KEY=${PORTCHECKER_GLUETUN_API_KEY}
+GLUETUN_PORT=${PORTCHECKER_GLUETUN_CONTROL_SERVER_PORT:-8000}
 SLEEP_COMPLETE=${PORTCHECKER_SLEEP:-120}
 KILL_ON_NOT_CONNECTABLE=${PORTCHECKER_KILL_ON_NOT_CONNECTABLE:-true}
 FIREWALL_VPN_INPUT_PORTS=${FIREWALL_VPN_INPUT_PORTS} # permanently set this port as the forwarded port
@@ -33,7 +34,7 @@ while :; do
     if [ -n "$FIREWALL_VPN_INPUT_PORTS" ]; then
         NEW_PORT="$FIREWALL_VPN_INPUT_PORTS"
     else
-        NEW_PORT=$(wget --header="X-API-Key: ${GLUETUN_API_KEY}" -T 5 -t 1 -qO- "http://localhost:8000/v1/openvpn/portforwarded" | jq ".port")
+        NEW_PORT=$(wget --header="X-API-Key: ${GLUETUN_API_KEY}" -T 5 -t 1 -qO- "http://localhost:${GLUETUN_PORT}/v1/openvpn/portforwarded" | jq ".port")
     
         if [[ "$NEW_PORT" -eq 0 ]]; then
             log "received port 0, ignoring and retrying after $SLEEP seconds"

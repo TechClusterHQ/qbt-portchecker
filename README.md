@@ -22,6 +22,7 @@ Add the following environment variables to your qBittorrent container:
 - WEBUI_PORT=8080 # if it doesn't exist already and you changed the port from the default 8080
 - DOCKER_MODS=ghcr.io/techclusterhq/qbt-portchecker:main
 - PORTCHECKER_GLUETUN_API_KEY=API KEY HERE # instructions below
+- PORTCHECKER_GLUETUN_CONTROL_SERVER_PORT=8000 # optional, default 8000: the port the gluetun control server can be reached at
 - PORTCHECKER_SLEEP=180 # optional, default 180: how long the script should wait between each check
 - PORTCHECKER_KILL_ON_NOT_CONNECTABLE=true # optional, default true: whether or not to restart qBittorrent if the port stops being connectable
 ```
