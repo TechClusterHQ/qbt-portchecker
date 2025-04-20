@@ -18,14 +18,12 @@ Important: If you were using an older version of this script (that uses custom s
 First, enable the option "Bypass authentication for clients on localhost" in the qBittorrent settings under the "Web UI" tab
 
 Add the following environment variables to your qBittorrent container:
-```yaml
-- WEBUI_PORT=8080 # if it doesn't exist already and you changed the port from the default 8080
-- DOCKER_MODS=ghcr.io/techclusterhq/qbt-portchecker:main
-- PORTCHECKER_GLUETUN_API_KEY=API KEY HERE # instructions below
-- PORTCHECKER_GLUETUN_CONTROL_SERVER_PORT=8000 # optional, default 8000: the port the gluetun control server can be reached at, needs to be set for gluetun using HTTP_CONTROL_SERVER_ADDRESS on the gluetun service
-- PORTCHECKER_SLEEP=180 # optional, default 180: how long the script should wait between each check
-- PORTCHECKER_KILL_ON_NOT_CONNECTABLE=true # optional, default true: whether or not to restart qBittorrent if the port stops being connectable
-```
+- `WEBUI_PORT=8080`: If it doesn't exist already and you changed the port from the default 8080
+- `DOCKER_MODS=ghcr.io/techclusterhq/qbt-portchecker:main`
+- `PORTCHECKER_GLUETUN_API_KEY=API KEY HERE`: Instructions below
+- `PORTCHECKER_GLUETUN_CONTROL_SERVER_PORT=8000`: Optional, default 8000: the port the gluetun control server can be reached at
+- `PORTCHECKER_SLEEP=180`: Optional, default 180: how long the script should wait between each check
+- `PORTCHECKER_KILL_ON_NOT_CONNECTABLE=true`: Optional, default true: whether or not to restart qBittorrent if the port stops being connectable
 
 > [!NOTE]  
 > If you are already using another docker mod with your qBittorrent container you have to combine both into one DOCKER_MODS variable, seperated by a pipe:
@@ -68,13 +66,11 @@ Start the stack again and check if the program updates the port accordingly. Fee
 First, enable the option "Bypass authentication for clients on localhost" in the qBittorrent settings under the "Web UI" tab
 
 Add the following environment variables to your qBittorrent container:
-```yaml
-- WEBUI_PORT=8080 # if it doesn't exist already and you changed the port from the default 8080
-- DOCKER_MODS=ghcr.io/techclusterhq/qbt-portchecker:main
-- FIREWALL_VPN_INPUT_PORTS= # set this to your forwarded vpn port
-- PORTCHECKER_SLEEP=180 # optional, default 180: how long the script should wait between each check
-- PORTCHECKER_KILL_ON_NOT_CONNECTABLE=true # optional, default true: whether or not to restart qBittorrent if the port stops being connectable
-```
+- `WEBUI_PORT=8080`: If it doesn't exist already and you changed the port from the default 8080
+- `DOCKER_MODS=ghcr.io/techclusterhq/qbt-portchecker:main`
+- `FIREWALL_VPN_INPUT_PORTS=12345`: Set this to your forwarded vpn port
+- `PORTCHECKER_SLEEP=180`: Optional, default 180: how long the script should wait between each check
+- `PORTCHECKER_KILL_ON_NOT_CONNECTABLE=true`: Optional, default true: whether or not to restart qBittorrent if the port stops being connectable
 
 If it exists, remove the `TORRENTING_PORT` variable completely.
 
