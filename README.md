@@ -28,7 +28,7 @@ Add the following environment variables to your qBittorrent container:
 > [!NOTE]  
 > If you are already using another docker mod with your qBittorrent container you have to combine both into one DOCKER_MODS variable, seperated by a pipe:
 > ```yaml
-> - DOCKER_MODS=ghcr.io/techclusterhq/qbt-portchecker:main|ghcr.io/techclusterhq/qbt-slowban:main
+> DOCKER_MODS=ghcr.io/techclusterhq/qbt-portchecker:main|ghcr.io/techclusterhq/qbt-slowban:main
 > ```
 
 If it exists, remove the `TORRENTING_PORT` variable completely.
