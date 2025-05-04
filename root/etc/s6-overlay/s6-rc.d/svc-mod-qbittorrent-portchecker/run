@@ -11,12 +11,23 @@ GLUETUN_PORT=${PORTCHECKER_GLUETUN_CONTROL_SERVER_PORT:-8000}
 SLEEP_COMPLETE=${PORTCHECKER_SLEEP:-120}
 KILL_ON_NOT_CONNECTABLE=${PORTCHECKER_KILL_ON_NOT_CONNECTABLE:-true}
 FIREWALL_VPN_INPUT_PORTS=${FIREWALL_VPN_INPUT_PORTS} # permanently set this port as the forwarded port
+HTTPS=${PORTCHECKER_HTTPS:-false}
 
 VAR_UP=true
 
+SCHEME="http"
+WGET_OPTIONS="--server-response --spider -T 5 -t 1"
+CURL_OPTIONS="--silent"
+
+if [[ "$HTTPS" == "true" ]]; then
+    SCHEME="https"
+    WGET_OPTIONS="$WGET_OPTIONS --no-check-certificate"
+    CURL_OPTIONS="$CURL_OPTIONS --insecure"
+fi
+
 while :; do
 
-    HTTP_STATUS=$(wget -T 5 -t 1 --server-response --spider "http://localhost:${WEBUI_PORT}" 2>&1 | awk '/HTTP\// {print $2}')
+    HTTP_STATUS=$(wget $WGET_OPTIONS "${SCHEME}://localhost:${WEBUI_PORT}" 2>&1 | awk '/HTTP\// {print $2}')
 
     if [[ "200" == "$HTTP_STATUS" ]]; then
         log "web ui online"
@@ -42,7 +53,7 @@ while :; do
             continue
         fi
     
-        PORT=$(wget -T 5 -t 1 -qO- "http://localhost:${WEBUI_PORT}/api/v2/app/preferences" | jq ".listen_port")
+        PORT=$(wget -T 5 -t 1 -qO- ${HTTPS:+--no-check-certificate} "${SCHEME}://localhost:${WEBUI_PORT}/api/v2/app/preferences" | jq ".listen_port")
     
         if [[ "" == "$NEW_PORT" ]]; then
             log "no port in file or file not found"
@@ -52,7 +63,7 @@ while :; do
             [[ true == "$VAR_UP" ]] && log "port did not change (port: $PORT)"
         else
             log "detected port changed: old: $PORT, new: $NEW_PORT"
-            curl --silent --request POST --url "http://localhost:${WEBUI_PORT}/api/v2/app/setPreferences" --data "json={\"listen_port\": $NEW_PORT}"
+            curl $CURL_OPTIONS --request POST --url "${SCHEME}://localhost:${WEBUI_PORT}/api/v2/app/setPreferences" --data "json={\"listen_port\": $NEW_PORT}"
     
             if [[ $? -eq 0 ]]; then
                 log "port updated to $NEW_PORT successfully"
