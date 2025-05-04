@@ -72,6 +72,7 @@ Add the following environment variables to your qBittorrent container:
 - `FIREWALL_VPN_INPUT_PORTS=12345`: Set this to your forwarded vpn port
 - `PORTCHECKER_SLEEP=180`: Optional, default 180: how long the script should wait between each check
 - `PORTCHECKER_KILL_ON_NOT_CONNECTABLE=true`: Optional, default true: whether or not to restart qBittorrent if the port stops being connectable
+- `PORTCHECKER_HTTPS=false`: Optional, default false: Set to `true` if you configured qBittorrent WebUI to use HTTPS.
 
 If it exists, remove the `TORRENTING_PORT` variable completely.
 
