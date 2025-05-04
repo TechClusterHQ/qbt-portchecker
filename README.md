@@ -22,8 +22,9 @@ Add the following environment variables to your qBittorrent container:
 - `DOCKER_MODS=ghcr.io/techclusterhq/qbt-portchecker:main`
 - `PORTCHECKER_GLUETUN_API_KEY=API KEY HERE`: Instructions below
 - `PORTCHECKER_GLUETUN_CONTROL_SERVER_PORT=8000`: Optional, default 8000: the port the gluetun control server can be reached at
-- `PORTCHECKER_SLEEP=180`: Optional, default 180: how long the script should wait between each check
+- `PORTCHECKER_SLEEP=120`: Optional, default 120: how long the script should wait between each check
 - `PORTCHECKER_KILL_ON_NOT_CONNECTABLE=true`: Optional, default true: whether or not to restart qBittorrent if the port stops being connectable
+- `PORTCHECKER_HTTPS=false`: Optional, default false: Set to `true` if you configured qBittorrent WebUI to use HTTPS.
 
 > [!NOTE]  
 > If you are already using another docker mod with your qBittorrent container you have to combine both into one DOCKER_MODS variable, seperated by a pipe:
