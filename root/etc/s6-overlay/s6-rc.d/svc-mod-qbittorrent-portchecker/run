@@ -25,12 +25,13 @@ if [[ "$HTTPS" == "true" ]]; then
     CURL_OPTIONS="$CURL_OPTIONS --insecure"
 fi
 
+log "Waiting for WebUI to become available at ${SCHEME}://localhost:${WEBUI_PORT}"
 while :; do
 
     HTTP_STATUS=$(wget $WGET_OPTIONS "${SCHEME}://localhost:${WEBUI_PORT}" 2>&1 | awk '/HTTP\// {print $2}')
 
     if [[ "200" == "$HTTP_STATUS" ]]; then
-        log "web ui online"
+        log "WebUI online at ${SCHEME}://localhost:${WEBUI_PORT}"
         break
     fi
 
