@@ -12,6 +12,7 @@ SLEEP_COMPLETE=${PORTCHECKER_SLEEP:-120}
 KILL_ON_NOT_CONNECTABLE=${PORTCHECKER_KILL_ON_NOT_CONNECTABLE:-true}
 FIREWALL_VPN_INPUT_PORTS=${FIREWALL_VPN_INPUT_PORTS} # permanently set this port as the forwarded port
 HTTPS=${PORTCHECKER_HTTPS:-false}
+PORTCHECK_SERVER_URL="${PORTCHECKER_SERVER:-https://portchecker.onrender.com}"
 
 VAR_UP=true
 
@@ -75,7 +76,7 @@ while :; do
         fi
     fi
 
-    CONNECTABLE=$(wget -T 5 -t 1 -qO- "https://portcheck.transmissionbt.com/${NEW_PORT}" 2> /dev/null)
+    CONNECTABLE=$(wget -T 5 -t 1 -qO- "${PORTCHECK_SERVER_URL}/${NEW_PORT}" 2> /dev/null)
 
     if [[ -z "$CONNECTABLE" ]]; then
         log "portcheck returned no response, skipping"
