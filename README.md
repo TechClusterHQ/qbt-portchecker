@@ -84,3 +84,11 @@ If you don't want gluetun to print a log message every time the portchecker acce
 ```yaml
 HTTP_CONTROL_SERVER_LOG=off
 ```
+
+## Using a custom portcheck server
+
+If you don't want to use the portcheck server provided by me, you can change the url of the portcheck server by adding the following environment variable with your own server url to the qBittorrent service:
+```yaml
+PORTCHECKER_SERVER=
+```
+The server code used for the public instance is [open source](https://github.com/TechClusterHQ/portchecker-server).
