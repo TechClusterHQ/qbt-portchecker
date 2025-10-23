@@ -56,7 +56,7 @@ apikey = "API KEY HERE"
 ```
 Now, set the qBittorrent environment variable `PORTCHECKER_GLUETUN_API_KEY` to the api key.
 
-Start the stack again and check if the program updates the port accordingly. Feel free to open a [GitHub issue](https://github.com/TechClusterHQ/qbt-portchecker/issues) or DM me on Discord (username `app.py`).
+Start the stack again and check if the program updates the port accordingly. Feel free to open a [GitHub issue](https://github.com/TechClusterHQ/qbt-portchecker/issues) or DM me on Discord (username `tech_cluster`).
 
 ## Installation (static port)
 
@@ -76,7 +76,7 @@ Add the following environment variables to your qBittorrent container:
 
 If it exists, remove the `TORRENTING_PORT` variable completely.
 
-Start the stack again and check if the program updates the port accordingly. Feel free to open a [GitHub issue](https://github.com/TechClusterHQ/qbt-portchecker/issues) or DM me on Discord (username `app.py`).
+Start the stack again and check if the program updates the port accordingly. Feel free to open a [GitHub issue](https://github.com/TechClusterHQ/qbt-portchecker/issues) or DM me on Discord (username `tech_cluster`).
 
 ## Disabling gluetun control server log messages
 
