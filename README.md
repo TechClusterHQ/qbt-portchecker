@@ -1,3 +1,10 @@
+> [!NOTE]
+> A recent gluetun update renamed the `/v1/openvpn/portforwarded` route used for receiving port information.
+> If you are using a VPN provider with dynamic port selection, please update the route in your gluetun auth/config.toml file:
+> ```diff
+> - routes = ["GET /v1/openvpn/portforwarded"]
+> + routes = ["GET /v1/portforward", "GET /v1/openvpn/portforwarded"]
+
 # qbt-portchecker
 
 Docker mod for the [linuxserver.io qbittorrent container](https://docs.linuxserver.io/images/docker-qbittorrent) that automatically updates the torrenting port to the forwarded vpn port (via [gluetun](https://github.com/qdm12/gluetun)) and checks if you are connectable.
@@ -50,7 +57,7 @@ Copy the following template to a file called `config.toml` (create it if it does
 ```toml
 [[roles]]
 name = "qbt-portchecker"
-routes = ["GET /v1/openvpn/portforwarded"]
+routes = ["GET /v1/portforward", "GET /v1/openvpn/portforwarded"]
 auth = "apikey"
 apikey = "API KEY HERE"
 ```
