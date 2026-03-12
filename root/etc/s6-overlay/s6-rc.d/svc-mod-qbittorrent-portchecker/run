@@ -50,7 +50,7 @@ while :; do
         NEW_PORT=$(wget --header="X-API-Key: ${GLUETUN_API_KEY}" -T 5 -t 1 -qO- "http://localhost:${GLUETUN_PORT}/v1/openvpn/portforwarded" | jq ".port")
     
         if [[ "$NEW_PORT" -eq 0 ]]; then
-            log "received port 0, ignoring and retrying after $SLEEP seconds"
+            log "received port 0 from gluetun, ignoring and retrying after $SLEEP seconds (gluetun port forwarding might have stopped)"
             sleep $SLEEP
             continue
         fi
@@ -84,7 +84,7 @@ while :; do
         [[ true == "$VAR_UP" ]] && log "Port $NEW_PORT is connectable, done"
         VAR_UP=false
     elif [[ "$CONNECTABLE" -eq 0 ]]; then
-        log "Port $NEW_PORT is not connectable, retrying in $SLEEP seconds"
+        log "port $NEW_PORT is not connectable, retrying in $SLEEP seconds"
         if [[ "$KILL_ON_NOT_CONNECTABLE" == true ]]; then
             log "killing qBittorrent..."
             pkill qbittorrent-nox
